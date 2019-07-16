@@ -30,22 +30,47 @@
         tools:text="Hello User" />
 
     <TextView
-        android:id="@+id/resultTxt"
+        android:id="@+id/CheckresultTxt"
         android:layout_width="match_parent"
         android:layout_height="66dp"
         android:layout_below="@id/txt4"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="5dp"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@android:color/holo_orange_light"
+        android:textSize="30sp"
+        tools:text="Your Answer" />
+
+    <TextView
+        android:id="@+id/resultTxt"
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:layout_below="@id/CheckresultTxt"
+        android:layout_marginTop="-11dp"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@android:color/holo_orange_light"
         android:textSize="30sp"
         tools:text="Your Judgement" />
 
+
+
     <Button
-        android:id="@+id/btn_start"
+        android:id="@+id/btn_check"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/resultTxt"
+        android:layout_marginTop="44dp"
+        android:onClick="checkButtonPressed"
+        android:text="Check"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/btn_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_check"
         android:layout_marginTop="44dp"
         android:onClick="resultButtonPressed"
         android:text="Show Result"

@@ -78,57 +78,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-/*    public void changeColorsPressed(View view) {
-        Log.d("JENELLE", "Button pressed;");
-
-        // logic goes here
-
-        // 1. get the r,g,b value from the UI
-
-        EditText name = (EditText) findViewById(R.id.name);
-
-        // Convert these to strings
-        String uname = name.getText().toString();
-
-
-        Log.d(TAG, "User name: " + uname);
-
-
-        String commandToSend = uname ;
-        Log.d(TAG, "Command to send to particle: " + commandToSend);
-
-
-        Async.executeAsync(ParticleCloudSDK.getCloud(), new Async.ApiWork<ParticleCloud, Object>() {
-            @Override
-            public Object callApi(@NonNull ParticleCloud particleCloud) throws ParticleCloudException, IOException {
-
-                // 2. build a list and put the r,g,b into the list
-                List<String> functionParameters = new ArrayList<String>();
-                functionParameters.add(commandToSend);
-
-                // 3. send the command to the particle
-                try {
-                    mDevice.callFunction("colors", functionParameters);
-                } catch (ParticleDevice.FunctionDoesNotExistException e) {
-                    e.printStackTrace();
-                }
-
-                return -1;
-            }
-
-            @Override
-            public void onSuccess(Object o) {
-                Log.d(TAG, "Sent colors command to device.");
-            }
-
-            @Override
-            public void onFailure(ParticleCloudException exception) {
-                Log.d(TAG, exception.getBestMessage());
-            }
-        });
-
-    }*/
-
     public void saveButtonPressed(View view)
     {
         Log.d("ALAY", "Button pressed;");

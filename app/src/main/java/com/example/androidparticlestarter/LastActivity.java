@@ -109,43 +109,43 @@ public class LastActivity extends AppCompatActivity {
 
         Log.d("ALAY", "Button pressed easy;");
 
-//        // logic goes here
-//
+        // logic goes here
+
            Log.d(TAG, "Level : " + lvleasy);
-//
-//
-//        String commandToSend = lvleasy ;
-//        Log.d(TAG, "Command to send to particle: " + commandToSend);
-//
-//
-//        Async.executeAsync(ParticleCloudSDK.getCloud(), new Async.ApiWork<ParticleCloud, Object>() {
-//            @Override
-//            public Object callApi(@NonNull ParticleCloud particleCloud) throws ParticleCloudException, IOException {
-//
-//                // 2. build a list and put the r,g,b into the list
-//                List<String> functionParameters = new ArrayList<String>();
-//                functionParameters.add(commandToSend);
-//
-//                // 3. send the command to the particle
-//                try {
-//                    mDevice.callFunction("colors", functionParameters);
-//                } catch (ParticleDevice.FunctionDoesNotExistException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                return -1;
-//            }
-//
-//            @Override
-//            public void onSuccess(Object o) {
-//                Log.d(TAG, "Sent colors command to device.");
-//            }
-//
-//            @Override
-//            public void onFailure(ParticleCloudException exception) {
-//                Log.d(TAG, exception.getBestMessage());
-//            }
-//        });
+
+
+            String commandToSend = lvleasy ;
+            Log.d(TAG, "Command to send to particle: " + commandToSend);
+
+
+            Async.executeAsync(ParticleCloudSDK.getCloud(), new Async.ApiWork<ParticleCloud, Object>() {
+                @Override
+                public Object callApi(@NonNull ParticleCloud particleCloud) throws ParticleCloudException, IOException {
+
+                // 2. build a list and put the r,g,b into the list
+                   List<String> functionParameters = new ArrayList<String>();
+                functionParameters.add(commandToSend);
+
+                // 3. send the command to the particle
+                    try {
+                        mDevice.callFunction("level", functionParameters);
+                    } catch (ParticleDevice.FunctionDoesNotExistException e) {
+                        e.printStackTrace();
+                    }
+
+                    return -1;
+                }
+
+                @Override
+                public void onSuccess(Object o) {
+                Log.d(TAG, "Sent command to device.");
+                }
+
+            @Override
+            public void onFailure(ParticleCloudException exception) {
+                Log.d(TAG, exception.getBestMessage());
+            }
+        });
 
 
         // creating a segue in Android
@@ -160,43 +160,41 @@ public class LastActivity extends AppCompatActivity {
 
         Log.d("ALAY", "Button pressed hard;");
 
-        //        // logic goes here
-//
         Log.d(TAG, "Level : " + lvlhard);
-//
-//
-//        String commandToSend = lvleasy ;
-//        Log.d(TAG, "Command to send to particle: " + commandToSend);
-//
-//
-//        Async.executeAsync(ParticleCloudSDK.getCloud(), new Async.ApiWork<ParticleCloud, Object>() {
-//            @Override
-//            public Object callApi(@NonNull ParticleCloud particleCloud) throws ParticleCloudException, IOException {
-//
-//                // 2. build a list and put the r,g,b into the list
-//                List<String> functionParameters = new ArrayList<String>();
-//                functionParameters.add(commandToSend);
-//
-//                // 3. send the command to the particle
-//                try {
-//                    mDevice.callFunction("colors", functionParameters);
-//                } catch (ParticleDevice.FunctionDoesNotExistException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                return -1;
-//            }
-//
-//            @Override
-//            public void onSuccess(Object o) {
-//                Log.d(TAG, "Sent colors command to device.");
-//            }
-//
-//            @Override
-//            public void onFailure(ParticleCloudException exception) {
-//                Log.d(TAG, exception.getBestMessage());
-//            }
-//        });
+
+
+            String commandToSend = lvlhard ;
+            Log.d(TAG, "Command to send to particle: " + commandToSend);
+
+
+            Async.executeAsync(ParticleCloudSDK.getCloud(), new Async.ApiWork<ParticleCloud, Object>() {
+                @Override
+                public Object callApi(@NonNull ParticleCloud particleCloud) throws ParticleCloudException, IOException {
+
+                    // 2. build a list and put the r,g,b into the list
+                    List<String> functionParameters = new ArrayList<String>();
+                    functionParameters.add(commandToSend);
+
+                    // 3. send the command to the particle
+                    try {
+                        mDevice.callFunction("level", functionParameters);
+                    } catch (ParticleDevice.FunctionDoesNotExistException e) {
+                        e.printStackTrace();
+                    }
+
+                    return -1;
+                }
+
+                @Override
+                public void onSuccess(Object o) {
+                Log.d(TAG, "Sent command to device.");
+            }
+
+                @Override
+                public void onFailure(ParticleCloudException exception) {
+                Log.d(TAG, exception.getBestMessage());
+                }
+            });
 
         // creating a segue in Android
         Intent i = new Intent(this, ResultActivity.class);

@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.particle.android.sdk.cloud.ParticleCloud;
 import io.particle.android.sdk.cloud.ParticleCloudSDK;
@@ -22,6 +24,8 @@ import io.particle.android.sdk.utils.Async;
 
 public class ResultActivity extends AppCompatActivity {
 
+
+    String datareceived;
 
     private final String TAG="ALAY";
 
@@ -41,6 +45,8 @@ public class ResultActivity extends AppCompatActivity {
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +62,6 @@ public class ResultActivity extends AppCompatActivity {
             t.setText("Hello " + name + "!!");
         }
 
-        TextView result = (TextView) findViewById(R.id.resultTxt);
 
 
         // 1. Initialize your connection to the Particle API
@@ -96,53 +101,174 @@ public class ResultActivity extends AppCompatActivity {
     }
 
 
-    public void resultButtonPressed(View view)
+    public void checkButtonPressed(View view)
     {
         Log.d("ALAY", "Button pressed result;");
 
-//        // check if device is null
-//        // if null, then show error
-//        if (mDevice == null) {
-//            Log.d(TAG, "Cannot find device");
-//            return;
-//        }
-//
-//
-//        Async.executeAsync(ParticleCloudSDK.getCloud(), new Async.ApiWork<ParticleCloud, Object>() {
-//
-//            @Override
-//            public Object callApi(@NonNull ParticleCloud particleCloud) throws ParticleCloudException, IOException {
-//                subscriptionId = ParticleCloudSDK.getCloud().subscribeToAllEvents(
-//                        "broadcastMessage",  // the first argument, "eventNamePrefix", is optional
-//                        new ParticleEventHandler() {
-//                            public void onEvent(String eventName, ParticleEvent event) {
-//                                Log.i(TAG, "Received event with payload: " + event.dataPayload);
-//                            }
-//
-//                            public void onEventError(Exception e) {
-//                                Log.e(TAG, "Event error: ", e);
-//                            }
-//                        });
-//
-//
-//                return -1;
-//            }
-//
-//            @Override
-//            public void onSuccess(Object o) {
-//                Log.d(TAG, "Successfully got device from Cloud");
-//            }
-//
-//            @Override
-//            public void onFailure(ParticleCloudException exception) {
-//                Log.d(TAG, exception.getBestMessage());
-//            }
-//        });
+        // check if device is null
+        // if null, then show error
+        if (mDevice == null) {
+            Log.d(TAG, "Cannot find device");
+            return;
+        }
+
+        String lvlhard = "show";
+
+        String commandToSend = lvlhard ;
+        Log.d(TAG, "Command to send to particle: " + commandToSend);
+
+
+        Async.executeAsync(ParticleCloudSDK.getCloud(), new Async.ApiWork<ParticleCloud, Object>() {
+            @Override
+            public Object callApi(@NonNull ParticleCloud particleCloud) throws ParticleCloudException, IOException {
+
+                // 2. build a list and put the r,g,b into the list
+                List<String> functionParameters = new ArrayList<String>();
+                functionParameters.add(commandToSend);
+
+                // 3. send the command to the particle
+                try {
+                    mDevice.callFunction("showInput", functionParameters);
+                } catch (ParticleDevice.FunctionDoesNotExistException e) {
+                    e.printStackTrace();
+                }
+
+                return -1;
+            }
+
+            @Override
+            public void onSuccess(Object o) {
+                Log.d(TAG, "Sent command to device.");
+            }
+
+            @Override
+            public void onFailure(ParticleCloudException exception) {
+                Log.d(TAG, exception.getBestMessage());
+            }
+        });
+
+
+
+
+        Async.executeAsync(ParticleCloudSDK.getCloud(), new Async.ApiWork<ParticleCloud, Object>() {
+
+            @Override
+            public Object callApi(@NonNull ParticleCloud particleCloud) throws ParticleCloudException, IOException {
+                subscriptionId = ParticleCloudSDK.getCloud().subscribeToAllEvents(
+                        "broadcastMessage",  // the first argument, "eventNamePrefix", is optional
+                        new ParticleEventHandler() {
+                            public void onEvent(String eventName, ParticleEvent event) {
+                                Log.d(TAG, "Received event with payload: " + event.dataPayload);
+
+                                TextView result = (TextView) findViewById(R.id.CheckresultTxt);
+                                result.setText(event.dataPayload);
+
+                                datareceived = event.dataPayload;
+                                Log.d(TAG, "Received event with payload: " + datareceived);
+
+                            }
+
+                            public void onEventError(Exception e) {
+                                Log.d(TAG, "Event error: ", e);
+                            }
+                        });
+
+
+                return -1;
+            }
+
+            @Override
+            public void onSuccess(Object o) {
+                Log.d(TAG, "Successfully got device from Cloud");
+            }
+
+            @Override
+            public void onFailure(ParticleCloudException exception) {
+                Log.d(TAG, exception.getBestMessage());
+            }
+        });
 
 
 
 
     }
+
+    String result;
+    public void resultButtonPressed(View view)
+    {
+        String answer = "1669933";
+
+        Log.d(TAG,  datareceived + "answer" + answer);
+
+        if (datareceived == answer) {
+            this.result = "WIN";
+
+            TextView t = (TextView) findViewById(R.id.resultTxt);
+            t.setText(this.result);
+
+        }
+        else {
+           result = "LOOSE";
+            TextView t = (TextView) findViewById(R.id.resultTxt);
+            t.setText(result);
+        }
+
+
+
+
+        Log.d("ALAY", "Button pressed result;");
+
+        // check if device is null
+        // if null, then show error
+        if (mDevice == null) {
+            Log.d(TAG, "Cannot find device");
+            return;
+        }
+
+
+
+
+
+
+        String commandToSend = this.result ;
+        Log.d(TAG, "Command to send to particle: " + commandToSend);
+
+
+        Async.executeAsync(ParticleCloudSDK.getCloud(), new Async.ApiWork<ParticleCloud, Object>() {
+            @Override
+            public Object callApi(@NonNull ParticleCloud particleCloud) throws ParticleCloudException, IOException {
+
+                // 2. build a list and put the r,g,b into the list
+                List<String> functionParameters = new ArrayList<String>();
+                functionParameters.add(commandToSend);
+
+                // 3. send the command to the particle
+                try {
+                    mDevice.callFunction("result", functionParameters);
+                } catch (ParticleDevice.FunctionDoesNotExistException e) {
+                    e.printStackTrace();
+                }
+
+                return -1;
+            }
+
+            @Override
+            public void onSuccess(Object o) {
+                Log.d(TAG, "Sent command to device.");
+            }
+
+            @Override
+            public void onFailure(ParticleCloudException exception) {
+                Log.d(TAG, exception.getBestMessage());
+            }
+        });
+
+
+    }
+
+
+
+
 
 
 
